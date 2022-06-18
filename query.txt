@@ -1,0 +1,58 @@
+USE[todo_db]
+GO
+
+    CREATE TABLE [dbo].[User] (
+
+    [Id] BIGINT IDENTITY(1,1) NOT NULL,
+
+[Name] NVARCHAR(50) NOT NULL,
+
+[Surname] NVARCHAR(50) NOT NULL,
+
+[PhoneNumber] VARCHAR(15) NOT NULL,
+
+[RoleId] BIGINT NOT NULL,
+PRIMARY KEY ([Id])
+    );
+
+GO
+
+    CREATE TABLE [dbo].[Roles] (
+
+    [Id] BIGINT IDENTITY(1,1) NOT NULL,
+
+[Title] NVARCHAR(200) NOT NULL,
+    PRIMARY KEY ([Id])
+    );
+
+GO
+
+    CREATE TABLE [dbo].[Tasks] (
+
+    [Id] BIGINT IDENTITY(1,1) NOT NULL,
+
+[Title] NVARCHAR(200) NOT NULL,
+
+[Priority] SMALLINT NOT NULL,
+
+[AssignedUserId] BIGINT NOT NULL,
+    );
+
+ALTER TABLE[dbo].[Tasks]
+ADD CONSTRAINT FK_Tasks_User FOREIGN KEY (AssignedUserId)
+REFERENCES[dbo].[User](Id)
+
+ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+GO
+
+
+    ALTER TABLE [dbo].[User]
+ADD CONSTRAINT FK_User_Roles FOREIGN KEY (RoleId)
+REFERENCES[dbo].[Roles](Id)
+
+ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+GO
